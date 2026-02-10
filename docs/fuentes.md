@@ -35,7 +35,7 @@ Contenido de los directorios:
 * `dist`: archivos adicionales para generar paquetes e instaladores
 * `configs`: configuraciones de los distintos toolchains para compilar con los Makefiles
 
-Puede encontrar más informaci�n de la funci�n de cada m�dulo y de c�mo se comunican entre
+Puede encontrar más informaci�n de la función de cada m�dulo y de c�mo se comunican entre
 ellos en http://cucarachasracing.blogspot.com.ar/2012/12/destripando-pseint.html
 
 Hay un Makefile general para compilar todo desde el directorio principal, y tambi�n un 
@@ -68,7 +68,7 @@ En cada directorio de fuentes hay un archivo .zpr. Este es el archivo de proyect
 Dado que el 99% del desarrollo ocurre en GNU/Linux. Este proyecto seguramente tendr� su configuraci�n
 para GNU/Linux actualizada, pero puede tener desactualizadas las configuraciones para otros sistemas.
 Puede utilizar los archivos config para encontrar configuraciones actualizadas, ya que son los que
-efectivamente se utilizan para generar los paquetes e instaladores que se publican en cada versi�n.
+efectivamente se utilizan para generar los paquetes e instaladores que se publican en cada versión.
 
 Los recurso gr�ficos son todos propios del proyecto (algunos compartidos con ZinjaI, proyecto
 del mismo autor), a excepci�n de la tipograf�a Inconsolata, de Raph Levien.

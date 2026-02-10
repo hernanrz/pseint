@@ -8,7 +8,7 @@
 DataValue func_rc(ErrorHandler &err_handler, DataValue *arg) {
 	double x = arg[0].GetAsReal();
 	if (x<0) {
-		err_handler.ErrorIfRunning(147,"Raíz cuadrada de número negativo.");
+		err_handler.ErrorIfRunning(147,"Raï¿½z cuadrada de nï¿½mero negativo.");
 		return DataValue::MakeEmpty(vt_numerica);
 	} 
 	return DataValue::MakeReal(std::sqrt(x));
@@ -38,7 +38,7 @@ DataValue func_sen(ErrorHandler &err_handler, DataValue *arg) {
 DataValue func_asen(ErrorHandler &err_handler, DataValue *arg) {
 	double x = arg[0].GetAsReal();
 	if (x<-1||x>+1) {
-		err_handler.ErrorIfRunning(312,"Argumento inválido para la función ASEN (debe estar en [-1;+1]).");
+		err_handler.ErrorIfRunning(312,"Argumento invÃ¡lido para la funciÃ³n ASEN (debe estar en [-1;+1]).");
 		return DataValue::MakeEmpty(vt_numerica);
 	}
 	return DataValue::MakeReal(asin(x));
@@ -47,7 +47,7 @@ DataValue func_asen(ErrorHandler &err_handler, DataValue *arg) {
 DataValue func_acos(ErrorHandler &err_handler, DataValue *arg) {
 	double x = arg[0].GetAsReal();
 	if (x<-1||x>+1) {
-		err_handler.ErrorIfRunning(312,"Argumento inválido para la función ACOS (debe estar en [-1;+1]).");
+		err_handler.ErrorIfRunning(312,"Argumento invÃ¡lido para la funciÃ³n ACOS (debe estar en [-1;+1]).");
 		return DataValue::MakeEmpty(vt_numerica);
 	}
 	return DataValue::MakeReal(acos(x));
@@ -96,9 +96,9 @@ DataValue func_aleatorio(ErrorHandler &err_handler, DataValue *arg) {
 DataValue func_trunc(ErrorHandler &err_handler, DataValue *arg) {
 	double dbl = arg[0].GetAsReal();
 	int i = int(dbl);
-	// intentar compensar algunos errores numéricos... que al menos parezca el 
-	// número que se ve al escribir, el cual se redondea a 10 decimales... 
-	// por eso uso un epsilon un poquito más chico que eso
+	// intentar compensar algunos errores numï¿½ricos... que al menos parezca el 
+	// nï¿½mero que se ve al escribir, el cual se redondea a 10 decimales... 
+	// por eso uso un epsilon un poquito mï¿½s chico que eso
 	if ((i+1)-dbl<1e-11) i++;      //  ((+56)+1)-(+56.999999) = +0.00001,   
 	else if ((i-1)-dbl>-1e-11) i--; // ((-56)-1)-(-56.999999) = -0.00001
 	return DataValue::MakeInt(i);
@@ -117,13 +117,13 @@ DataValue func_mayusculas(ErrorHandler &err_handler, DataValue *arg) {
 	std::string s = arg[0].GetAsString(); size_t l = s.size();
 	for(size_t i=0;i<l;i++) { 
 		if (s[i]>='a'&&s[i]<='z') s[i]+='A'-'a';
-		else if (s[i]=='ñ') s[i]='Ñ';
-		else if (s[i]=='á') s[i]='Á';
-		else if (s[i]=='é') s[i]='É';
-		else if (s[i]=='í') s[i]='Í';
-		else if (s[i]=='ó') s[i]='Ó';
-		else if (s[i]=='ú') s[i]='Ú';
-		else if (s[i]=='ü') s[i]='Ü';
+		else if (s[i]=='ï¿½') s[i]='ï¿½';
+		else if (s[i]=='ï¿½') s[i]='ï¿½';
+		else if (s[i]=='ï¿½') s[i]='ï¿½';
+		else if (s[i]=='ï¿½') s[i]='ï¿½';
+		else if (s[i]=='ï¿½') s[i]='ï¿½';
+		else if (s[i]=='ï¿½') s[i]='ï¿½';
+		else if (s[i]=='ï¿½') s[i]='ï¿½';
 	}
 	return DataValue::MakeString(s);
 }
@@ -132,13 +132,13 @@ DataValue func_minusculas(ErrorHandler &err_handler, DataValue *arg) {
 	std::string s = arg[0].GetAsString(); size_t l = s.length();
 	for(size_t i=0;i<l;i++) { 
 		if (s[i]>='A'&&s[i]<='Z') s[i]+='a'-'A';
-		else if (s[i]=='Ñ') s[i]='ñ';
-		else if (s[i]=='Á') s[i]='á';
-		else if (s[i]=='É') s[i]='é';
-		else if (s[i]=='Í') s[i]='í';
-		else if (s[i]=='Ó') s[i]='ó';
-		else if (s[i]=='Ú') s[i]='ú';
-		else if (s[i]=='Ü') s[i]='ü';
+		else if (s[i]=='ï¿½') s[i]='ï¿½';
+		else if (s[i]=='ï¿½') s[i]='ï¿½';
+		else if (s[i]=='ï¿½') s[i]='ï¿½';
+		else if (s[i]=='ï¿½') s[i]='ï¿½';
+		else if (s[i]=='ï¿½') s[i]='ï¿½';
+		else if (s[i]=='ï¿½') s[i]='ï¿½';
+		else if (s[i]=='ï¿½') s[i]='ï¿½';
 	}
 	return DataValue::MakeString(s);
 }
@@ -165,7 +165,7 @@ DataValue func_atof(ErrorHandler &err_handler, DataValue *arg) {
 		if (!punto && s[i]=='.')
 			punto=true;
 		else if (s[i]<'0'||s[i]>'9') {
-			err_handler.ErrorIfRunning(311,std::string("La cadena (\"")+s+"\") no representa un número.");
+			err_handler.ErrorIfRunning(311,std::string("La cadena (\"")+s+"\") no representa un nï¿½mero.");
 			return DataValue::MakeEmpty(vt_numerica);
 		}
 	}
@@ -174,7 +174,7 @@ DataValue func_atof(ErrorHandler &err_handler, DataValue *arg) {
 }
 
 DataValue func_ftoa(ErrorHandler &err_handler, DataValue *arg) {
-	return DataValue::MakeString(arg[0].GetForUser()); // la conversión es para que redondee
+	return DataValue::MakeString(arg[0].GetForUser()); // la conversiÃ³n es para que redondee
 }
 
 DataValue func_pi(ErrorHandler &err_handler, DataValue *arg) {
@@ -203,15 +203,15 @@ void FuncsManager::LoadPredefs() {
 	m_predefs["TRUNC"]     = std::make_unique<Funcion>(vt_numerica,func_trunc,vt_numerica);
 	m_predefs["REDON"]     = std::make_unique<Funcion>(vt_numerica,func_redon,vt_numerica);
 	if (lang[LS_ENABLE_STRING_FUNCTIONS]) {
-		m_predefs["CONVERTIRANÚMERO"] = std::make_unique<Funcion>(vt_numerica,func_atof,vt_caracter);
+		m_predefs["CONVERTIRANï¿½MERO"] = std::make_unique<Funcion>(vt_numerica,func_atof,vt_caracter);
 		m_predefs["CONVERTIRANUMERO"] = std::make_unique<Funcion>(vt_numerica,func_atof,vt_caracter);
 		m_predefs["CONVERTIRATEXTO"]  = std::make_unique<Funcion>(vt_caracter,func_ftoa,vt_numerica);
 		m_predefs["LONGITUD"]         = std::make_unique<Funcion>(vt_numerica,func_longitud,vt_caracter);
 		m_predefs["SUBCADENA"]        = std::make_unique<Funcion>(vt_caracter,func_subcadena,vt_caracter,vt_numerica_entera,vt_numerica_entera);
 		m_predefs["MAYUSCULAS"]       = std::make_unique<Funcion>(vt_caracter,func_mayusculas,vt_caracter);
 		m_predefs["MINUSCULAS"]       = std::make_unique<Funcion>(vt_caracter,func_minusculas,vt_caracter);
-		m_predefs["MAYÚSCULAS"]       = std::make_unique<Funcion>(vt_caracter,func_mayusculas,vt_caracter);
-		m_predefs["MINÚSCULAS"]       = std::make_unique<Funcion>(vt_caracter,func_minusculas,vt_caracter);
+		m_predefs["MAYï¿½SCULAS"]       = std::make_unique<Funcion>(vt_caracter,func_mayusculas,vt_caracter);
+		m_predefs["MINï¿½SCULAS"]       = std::make_unique<Funcion>(vt_caracter,func_minusculas,vt_caracter);
 		m_predefs["CONCATENAR"]       = std::make_unique<Funcion>(vt_caracter,func_concatenar,vt_caracter,vt_caracter);
 	}
 	m_predefs["FECHAACTUAL"]     = std::make_unique<Funcion>(vt_numerica,func_fecha);

@@ -13,19 +13,19 @@
 void show_user_info(std::string msg) {
 	if (fix_win_charset) fixwincharset(msg);
 	if (colored_output) setForeColor(COLOR_INFO);
-	if (with_io_references) Inter.SendErrorPositionToTerminal(); // para que no asocie el error/mensaje con la última entrada/salida
+	if (with_io_references) Inter.SendErrorPositionToTerminal(); // para que no asocie el error/mensaje con la ï¿½ltima entrada/salida
 	std::cout << msg << std::endl;
 }
 
 void show_user_info(std::string msg1, int num, std::string msg2) {
 	if (fix_win_charset) { fixwincharset(msg1); fixwincharset(msg2); }
 	if (colored_output) setForeColor(COLOR_INFO);
-	if (with_io_references) Inter.SendErrorPositionToTerminal(); // para que no asocie el error/mensaje con la última entrada/salida
+	if (with_io_references) Inter.SendErrorPositionToTerminal(); // para que no asocie el error/mensaje con la ï¿½ltima entrada/salida
 	std::cout << msg1 << num << msg2 << std::endl;
 }
 
 
-// ***************** Control de Errores y Depuración **********************
+// ***************** Control de Errores y Depuraciï¿½n **********************
 
 void WarnError_impl(int num, std::string s, bool runtime) {
 	if (runtime!=Inter.IsRunning()) return;
@@ -61,19 +61,19 @@ void ExeError_impl(int num, std::string s) {
 		std::cout << "Lin " << Inter.GetLocation().linea << " (inst " << Inter.GetLocation().instruccion << "): ERROR " << num << ": " << s << std::endl;
 		for(int i=Inter.GetBacktraceLevel()-1;i>0;i--) {  
 			FrameInfo fi=Inter.GetFrame(i);
-			std::cout << "...dentro del subproceso " << fi.func_name << ", invocado desde la línea " << fi.loc.linea << "." << std::endl;
+			std::cout << "...dentro del subproceso " << fi.func_name << ", invocado desde la lï¿½nea " << fi.loc.linea << "." << std::endl;
 		}
 		if (ExeInfoOn) {
 			ExeInfo << "Lin " << Inter.GetLocation().linea << " (inst " << Inter.GetLocation().instruccion << "): ERROR " << num << ": " << s << std::endl;
 			for(int i=Inter.GetBacktraceLevel()-1;i>0;i--) {  
 				FrameInfo fi=Inter.GetFrame(i);
 				ExeInfo << "Lin " << fi.loc.linea<<" (inst " << fi.loc.instruccion<<"): ";
-				ExeInfo << "...dentro del subproceso " << fi.func_name << ", invocado desde aquí." << std::endl;
+				ExeInfo << "...dentro del subproceso " << fi.func_name << ", invocado desde aquï¿½." << std::endl;
 			}
 			ExeInfo << "*** Ejecucion Interrumpida. ***" << std::endl;
 		} 
 		if (wait_key) {
-			show_user_info("*** Ejecución Interrumpida. ***");
+			show_user_info("*** Ejecuciï¿½n Interrumpida. ***");
 		}
 //		Inter.AddError(s,Inter.GetLocation().linea);
 		if (ExeInfoOn) ExeInfo.close();
@@ -101,7 +101,7 @@ void SynError_impl(int num, std::string s, CodeLocation loc) {
 		Inter.SetError(std::string("<<")+s+">>");
 	} else {
 		if (colored_output) setForeColor(COLOR_ERROR);
-		if (with_io_references) Inter.SendErrorPositionToTerminal(); // para que no asocie el error con la última entrada/salida
+		if (with_io_references) Inter.SendErrorPositionToTerminal(); // para que no asocie el error con la ï¿½ltima entrada/salida
 		std::cout << "Lin " << loc.linea;
 		if (loc.instruccion>0) std::cout << " (inst " << loc.instruccion << ")";
 		std::cout << ": ERROR " << num << ": " << s << std::endl;
@@ -139,9 +139,9 @@ bool CheckVariable(RunTime &rt, std::string str, int errcode) {
 		ret=false;
 	else if (str=="FINSEGUN" || str=="FINPROCESO" || str=="FINMIENTRAS" || str=="HASTA" || str=="DEFINIR" || str=="COMO")
 		ret=false;
-	else if (lang[LS_ENABLE_USER_FUNCTIONS] && (str=="FINSUBPROCESO" || str=="SUBPROCESO" ||str=="FINFUNCION" || str=="FUNCION" ||str=="FINFUNCIÓN" || str=="FUNCIÓN") )
+	else if (lang[LS_ENABLE_USER_FUNCTIONS] && (str=="FINSUBPROCESO" || str=="SUBPROCESO" ||str=="FINFUNCION" || str=="FUNCION" ||str=="FINFUNCIÃ“N" || str=="FUNCIÃ“N") )
 		ret=false;
-	if (!ret && errcode!=-1) rt.err.SyntaxError(errcode,std::string("Identificador no válido (")+str+")."); 
+	if (!ret && errcode!=-1) rt.err.SyntaxError(errcode,std::string("Identificador no vÃ¡lido (")+str+")."); 
 	return ret;
 }
 
@@ -194,7 +194,7 @@ bool CheckVariable(RunTime &rt, std::string str, int errcode) {
 // ----------------------------------------------------------------------
 //bool MidCompareNC(string a, string b, int from) { 
 //	unsigned int to=from+a.size();
-//	// controla los tamaños y corta la parte de interes
+//	// controla los tamaï¿½os y corta la parte de interes
 //	if (b.size()<to) return false;
 //	b.erase(to,b.size());
 //	b.erase(0,from);
@@ -287,42 +287,42 @@ void fixwincharset(std::string &s, bool reverse) {
 	if (reverse) {
 		for(unsigned int i=0;i<s.size();i++) { 
 			char &c=s[i];
-			if (c==-96) c='á';
-			else if (c==-126) c='é';
-			else if (c==-95) c='í';
-			else if (c==-94) c='ó';
-			else if (c==-93) c='ú';
-			else if (c==-75) c='Á';
-			else if (c==-112) c='É';
-			else if (c==-42) c='Í';
-			else if (c==-32) c='Ó';
-			else if (c==-23) c='Ú';
-			else if (c==-92) c='ñ';
-			else if (c==-91) c='Ñ';
-			else if (c==-83) c='¡';
-			else if (c==-88) c='¿';
-			else if (c==-127) c='ü';
-			else if (c==-102) c='Ü';
+			if (c==-96) c='\xE1'; // Ã¡
+			else if (c==-126) c='\xE9'; // Ã©
+			else if (c==-95) c='\xED'; // Ã­
+			else if (c==-94) c='\xF3'; // Ã³
+			else if (c==-93) c='\xFA'; // Ãº
+			else if (c==-75) c='\xC1'; // Ã
+			else if (c==-112) c='\xC9'; // Ã‰
+			else if (c==-42) c='\xCD'; // Ã
+			else if (c==-32) c='\xD3'; // Ã“
+			else if (c==-23) c='\xDA'; // Ãš
+			else if (c==-92) c='\xF1'; // Ã±
+			else if (c==-91) c='\xD1'; // Ã‘
+			else if (c==-83) c='\xA1'; // Â¡
+			else if (c==-88) c='\xBF'; // Â¿
+			else if (c==-127) c='\xFC'; // Ã¼
+			else if (c==-102) c='\xDC'; // Ãœ
 		}
 	} else {
 		for(unsigned int i=0;i<s.size();i++) { 
 			char &c=s[i];
-			if (c=='á') c=-96;
-			else if (c=='é') c=-126;
-			else if (c=='í') c=-95;
-			else if (c=='ó') c=-94;
-			else if (c=='ú') c=-93;
-			else if (c=='Á') c=-75;
-			else if (c=='É') c=-112;
-			else if (c=='Í') c=-42;
-			else if (c=='Ó') c=-32;
-			else if (c=='Ú') c=-23;
-			else if (c=='ñ') c=-92;
-			else if (c=='Ñ') c=-91;
-			else if (c=='¡') c=-83;
-			else if (c=='¿') c=-88;
-			else if (c=='ü') c=-127;
-			else if (c=='Ü') c=-102;
+			if (c=='\xE1') c=-96; // Ã¡
+			else if (c=='\xE9') c=-126; // Ã©
+			else if (c=='\xED') c=-95; // Ã­
+			else if (c=='\xF3') c=-94; // Ã³
+			else if (c=='\xFA') c=-93; // Ãº
+			else if (c=='\xC1') c=-75; // Ã
+			else if (c=='\xC9') c=-112; // Ã‰
+			else if (c=='\xCD') c=-42; // Ã
+			else if (c=='\xD3') c=-32; // Ã“
+			else if (c=='\xDA') c=-23; // Ãš
+			else if (c=='\xF1') c=-92; // Ã±
+			else if (c=='\xD1') c=-91; // Ã‘
+			else if (c=='\xA1') c=-83; // Â¡
+			else if (c=='\xBF') c=-88; // Â¿
+			else if (c=='\xFC') c=-127; // Ã¼
+			else if (c=='\xDC') c=-102; // Ãœ
 		}
 	}
 }
@@ -364,7 +364,7 @@ std::unique_ptr<Funcion> MakeFuncionForSubproceso(RunTime &rt, const FuncStrings
 	
 	// parsear nombre y valor de retorno
 	if (parts.ret_id.empty()) {
-		the_func->tipos[0]=vt_error; // para que cuando la quieran usar en una expresión salte un error, porque evaluar no verifica si se devuelve algo porque se use desde Ejecutar parala instrucción INVOCAR
+		the_func->tipos[0]=vt_error; // para que cuando la quieran usar en una expresiï¿½n salte un error, porque evaluar no verifica si se devuelve algo porque se use desde Ejecutar parala instrucciï¿½n INVOCAR
 	} else {
 		if (es_proceso) err_handler.SyntaxError(242,"El proceso principal no puede retornar ningun valor.");
 		the_func->nombres[0] = parts.ret_id;
@@ -379,7 +379,7 @@ std::unique_ptr<Funcion> MakeFuncionForSubproceso(RunTime &rt, const FuncStrings
 		if (rt.funcs.IsFunction(parts.nombre))
 			err_handler.SyntaxError(243,MkErrorMsg("Ya existe otro $ con el mismo nombre($).",kw2str(KW_ALGORITMO)+" o "+kw2str(KW_SUBALGORITMO),parts.nombre+")."));
 		else if (not CheckVariable(rt,parts.nombre))
-			err_handler.SyntaxError(244,MkErrorMsg("El nombre de $ ($) no es un identificador válido.",kw2str(es_proceso?KW_ALGORITMO:KW_SUBALGORITMO),parts.nombre));
+			err_handler.SyntaxError(244,MkErrorMsg("El nombre de $ ($) no es un identificador vÃ¡lido.",kw2str(es_proceso?KW_ALGORITMO:KW_SUBALGORITMO),parts.nombre));
 	}
 	// argumentos
 	std::string str_args = parts.args; Trim(str_args);
@@ -388,7 +388,7 @@ std::unique_ptr<Funcion> MakeFuncionForSubproceso(RunTime &rt, const FuncStrings
 			if (es_proceso) err_handler.SyntaxError(252,"Se esperaba el fin de linea."); 
 			else {
 				if (the_func->nombres[0].size()) err_handler.SyntaxError(253,"Se esperaba la lista de argumentos, o el fin de linea.");
-				else err_handler.SyntaxError(254,"Se esperaba la lista de argumentos, el signo de asignación, o el fin de linea.");
+				else err_handler.SyntaxError(254,"Se esperaba la lista de argumentos, el signo de asignaciÃ³n, o el fin de linea.");
 			}
 		} else { // analizar los argumentos
 			if (es_proceso) err_handler.SyntaxError(246,MkErrorMsg("El $ principal no puede recibir argumentos.",kw2str(KW_ALGORITMO)));
