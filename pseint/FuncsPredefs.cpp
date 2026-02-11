@@ -117,13 +117,13 @@ DataValue func_mayusculas(ErrorHandler &err_handler, DataValue *arg) {
 	std::string s = arg[0].GetAsString(); size_t l = s.size();
 	for(size_t i=0;i<l;i++) { 
 		if (s[i]>='a'&&s[i]<='z') s[i]+='A'-'a';
-		else if (s[i]=='�') s[i]='�';
-		else if (s[i]=='�') s[i]='�';
-		else if (s[i]=='�') s[i]='�';
-		else if (s[i]=='�') s[i]='�';
-		else if (s[i]=='�') s[i]='�';
-		else if (s[i]=='�') s[i]='�';
-		else if (s[i]=='�') s[i]='�';
+		else if (s[i]=='\xE1') s[i]='\xC1'; // á -> Á
+		else if (s[i]=='\xE9') s[i]='\xC9'; // é -> É
+		else if (s[i]=='\xED') s[i]='\xCD'; // í -> Í
+		else if (s[i]=='\xF3') s[i]='\xD3'; // ó -> Ó
+		else if (s[i]=='\xFA') s[i]='\xDA'; // ú -> Ú
+		else if (s[i]=='\xF1') s[i]='\xD1'; // ñ -> Ñ
+		else if (s[i]=='\xFC') s[i]='\xDC'; // ü -> Ü
 	}
 	return DataValue::MakeString(s);
 }
@@ -132,13 +132,13 @@ DataValue func_minusculas(ErrorHandler &err_handler, DataValue *arg) {
 	std::string s = arg[0].GetAsString(); size_t l = s.length();
 	for(size_t i=0;i<l;i++) { 
 		if (s[i]>='A'&&s[i]<='Z') s[i]+='a'-'A';
-		else if (s[i]=='�') s[i]='�';
-		else if (s[i]=='�') s[i]='�';
-		else if (s[i]=='�') s[i]='�';
-		else if (s[i]=='�') s[i]='�';
-		else if (s[i]=='�') s[i]='�';
-		else if (s[i]=='�') s[i]='�';
-		else if (s[i]=='�') s[i]='�';
+		else if (s[i]=='\xC1') s[i]='\xE1'; // Á -> á
+		else if (s[i]=='\xC9') s[i]='\xE9'; // É -> é
+		else if (s[i]=='\xCD') s[i]='\xED'; // Í -> í
+		else if (s[i]=='\xD3') s[i]='\xF3'; // Ó -> ó
+		else if (s[i]=='\xDA') s[i]='\xFA'; // Ú -> ú
+		else if (s[i]=='\xD1') s[i]='\xF1'; // Ñ -> ñ
+		else if (s[i]=='\xDC') s[i]='\xFC'; // Ü -> ü
 	}
 	return DataValue::MakeString(s);
 }
@@ -165,7 +165,7 @@ DataValue func_atof(ErrorHandler &err_handler, DataValue *arg) {
 		if (!punto && s[i]=='.')
 			punto=true;
 		else if (s[i]<'0'||s[i]>'9') {
-			err_handler.ErrorIfRunning(311,std::string("La cadena (\"")+s+"\") no representa un n�mero.");
+			err_handler.ErrorIfRunning(311,std::string("La cadena (\"")+s+"\") no representa un número.");
 			return DataValue::MakeEmpty(vt_numerica);
 		}
 	}
@@ -203,15 +203,15 @@ void FuncsManager::LoadPredefs() {
 	m_predefs["TRUNC"]     = std::make_unique<Funcion>(vt_numerica,func_trunc,vt_numerica);
 	m_predefs["REDON"]     = std::make_unique<Funcion>(vt_numerica,func_redon,vt_numerica);
 	if (lang[LS_ENABLE_STRING_FUNCTIONS]) {
-		m_predefs["CONVERTIRAN�MERO"] = std::make_unique<Funcion>(vt_numerica,func_atof,vt_caracter);
+		m_predefs["CONVERTIRANÚMERO"] = std::make_unique<Funcion>(vt_numerica,func_atof,vt_caracter);
 		m_predefs["CONVERTIRANUMERO"] = std::make_unique<Funcion>(vt_numerica,func_atof,vt_caracter);
 		m_predefs["CONVERTIRATEXTO"]  = std::make_unique<Funcion>(vt_caracter,func_ftoa,vt_numerica);
 		m_predefs["LONGITUD"]         = std::make_unique<Funcion>(vt_numerica,func_longitud,vt_caracter);
 		m_predefs["SUBCADENA"]        = std::make_unique<Funcion>(vt_caracter,func_subcadena,vt_caracter,vt_numerica_entera,vt_numerica_entera);
 		m_predefs["MAYUSCULAS"]       = std::make_unique<Funcion>(vt_caracter,func_mayusculas,vt_caracter);
 		m_predefs["MINUSCULAS"]       = std::make_unique<Funcion>(vt_caracter,func_minusculas,vt_caracter);
-		m_predefs["MAY�SCULAS"]       = std::make_unique<Funcion>(vt_caracter,func_mayusculas,vt_caracter);
-		m_predefs["MIN�SCULAS"]       = std::make_unique<Funcion>(vt_caracter,func_minusculas,vt_caracter);
+		m_predefs["MAYÚSCULAS"]       = std::make_unique<Funcion>(vt_caracter,func_mayusculas,vt_caracter);
+		m_predefs["MINÚSCULAS"]       = std::make_unique<Funcion>(vt_caracter,func_minusculas,vt_caracter);
 		m_predefs["CONCATENAR"]       = std::make_unique<Funcion>(vt_caracter,func_concatenar,vt_caracter,vt_caracter);
 	}
 	m_predefs["FECHAACTUAL"]     = std::make_unique<Funcion>(vt_numerica,func_fecha);
