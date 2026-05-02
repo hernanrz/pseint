@@ -1,5 +1,6 @@
 #include "global.h"
 #include <iostream>
+#include <cstdlib>
 using namespace std;
 
 void lnx_setBackColor(int color);	
@@ -95,7 +96,47 @@ void setTitle(const char* title) {
 		lnx_setTitle(title);	
 }
 
+#ifdef __EMSCRIPTEN__
+	#include <emscripten.h>
+	EM_ASYNC_JS(char*, js_getLine, (), {
+		const toUtf8Ptr = (text) => {
+			const safeText = typeof text === 'string' ? text : "";
+			const len = lengthBytesUTF8(safeText) + 1;
+			const ptr = _malloc(len);
+			stringToUTF8(safeText, ptr, len);
+			return ptr;
+		};
+
+		if (typeof Module !== 'undefined' && typeof Module.onGetLine === 'function') {
+			return Promise.resolve(Module.onGetLine()).then((value) => toUtf8Ptr(value));
+		}
+
+		return new Promise(resolve => {
+			const input = document.createElement('input');
+			input.type = 'text';
+			input.style.position = 'fixed';
+			input.style.bottom = '10px';
+			input.style.left = '10px';
+			document.body.appendChild(input);
+			input.focus();
+			input.addEventListener('keydown', (event) => {
+				if (event.key === 'Enter') {
+					resolve(toUtf8Ptr(input.value));
+					document.body.removeChild(input);
+				}
+			});
+		});
+	});
+#endif 
+
 string getLine() {
-	if (for_pseint_terminal) cout<<"\033[zl";
-	string s; getline(cin,s); return s;
+	# ifndef __EMSCRIPTEN__
+		if (for_pseint_terminal) cout<<"\033[zl";
+		string s; getline(cin,s); return s;
+	# else
+		char* line = js_getLine();
+		string s = line ? string(line) : string();
+		free(line);
+		return s;
+	# endif
 }

@@ -18,6 +18,8 @@
 #include "ProgramaDump.hpp"
 using namespace std;
 
+int pseint_entrypoint(int argc, char* argv[]);
+
 void on_signal(int s) {
 	Inter.SetFinished(true);
 	Inter.UnInit();
@@ -63,7 +65,7 @@ LangSettings lang(LS_DO_NOT_INIT);
 //----------------------------------------------------------------------------
 // ************************* Programa Principal ******************************
 //-----------------------------------------------------------------------------
-int main(int argc, char* argv[]) {
+int pseint_entrypoint(int argc, char* argv[]) {
 
 	signal(2,on_signal);
 	signal(6,on_signal);
@@ -346,6 +348,10 @@ int main(int argc, char* argv[]) {
 	}
 
 	return 0;
+}
+
+int main(int argc, char* argv[]) {
+	return pseint_entrypoint(argc, argv);
 }
 
 
