@@ -3,7 +3,7 @@
 #include "utils.h"
 #include "strFuncs.hpp"
 
-/// @todo:  reemplazar por alguna otra func mas específica
+/// @todo:  reemplazar por alguna otra func mas especï¿½fica
 std::pair<std::string,bool> Normalizar(std::string &cadena);
 
 void initKeywords(KeywordsList &keywords) {
@@ -11,19 +11,19 @@ void initKeywords(KeywordsList &keywords) {
 	keywords[KW_FINALGORITMO] = "FinAlgoritmo,FinProceso,Fin Algoritmo,Fin Proceso";
 	keywords[KW_POR_COPIA] = "Por Copia,Por Valor";
 	keywords[KW_POR_REFERENCIA] = "Por Referencia";
-	keywords[KW_SUBALGORITMO] = "Función,SubAlgoritmo,SubProceso";
-	keywords[KW_FINSUBALGORITMO] = "FinFunción,FinSubAlgoritmo,FinSubProceso,Fin Función,Fin SubAlgoritmo,Fin SubProceso";
+	keywords[KW_SUBALGORITMO] = "FunciÃ³n,Funcion,SubAlgoritmo,SubProceso";
+	keywords[KW_FINSUBALGORITMO] = "FinFunciÃ³n,FinFuncion,FinSubAlgoritmo,FinSubProceso,Fin FunciÃ³n,Fin Funcion,Fin SubAlgoritmo,Fin SubProceso";
 	keywords[KW_LEER] = "Leer";
 	keywords[KW_ESCRIBIR] = "Escribir,Mostrar,Imprimir,Informar";
 	keywords[KW_SIN_SALTAR] = "Sin Saltar,Sin Bajar,SinSaltar,SinBajar";
-	keywords[KW_DIMENSIONAR] = "Dimensionar,Dimensión";
-	keywords[KW_REDIMENSIONAR] = "Redimensionar,Redimensión";
+	keywords[KW_DIMENSIONAR] = "Dimensionar,Dimension";
+	keywords[KW_REDIMENSIONAR] = "Redimensionar,Redimension";
 	keywords[KW_DEFINIR] = "Definir";
 	keywords[KW_COMO] = "Como";
 	keywords[KW_TIPO_ENTERO] = "Entero,Entera,Enteros,Enteras";
-	keywords[KW_TIPO_REAL] = "Real,Reales,Número,Numero,Números,Numérica,Numéricas,Numérico,Numéricos";
-	keywords[KW_TIPO_LOGICO] = "Lógico,Lógica,Lógicos,Lógicas";
-	keywords[KW_TIPO_CARACTER] = "Cadena,Cadenas,Texto,Textos,Carácter,Caracteres,";
+	keywords[KW_TIPO_REAL] = "Real,Reales,NÃºmero,Numero,NÃºmeros,Numeros,NumÃ©rica,Numerica,NumÃ©ricas,Numericas,NumÃ©rico,Numerico,NumÃ©ricos,Numericos";
+	keywords[KW_TIPO_LOGICO] = "LÃ³gico,Logico,LÃ³gica,Logica,LÃ³gicos,Logicos,LÃ³gicas,Logicas";
+	keywords[KW_TIPO_CARACTER] = "Cadena,Cadenas,Texto,Textos,CarÃ¡cter,Caracter,Caracteres";
 	keywords[KW_ES] = "Es,Son";
 	keywords[KW_SI] = "Si";
 	keywords[KW_ENTONCES] = "Entonces";
@@ -35,10 +35,10 @@ void initKeywords(KeywordsList &keywords) {
 	keywords[KW_REPETIR] = "Repetir";
 	keywords[KW_HASTAQUE] = "Hasta Que,HastaQue";
 	keywords[KW_MIENTRASQUE] = "Mientras Que,MientrasQue";
-	keywords[KW_SEGUN] = "Según";
+	keywords[KW_SEGUN] = "SegÃºn,Segun";
 	keywords[KW_OPCION] = "Si Es,SiEs,Opcion,Caso";
 	keywords[KW_DEOTROMODO] = "De Otro Modo,DeOtroModo";
-	keywords[KW_FINSEGUN] = "FinSegún,Fin Según";
+	keywords[KW_FINSEGUN] = "FinSegÃºn,FinSegun,Fin SegÃºn,Fin Segun";
 	keywords[KW_PARA] = "Para";
 	keywords[KW_DESDE] = "Desde";
 	keywords[KW_HASTA] = "Hasta";
@@ -162,20 +162,20 @@ int FindKeyword(std::string &src, const Keyword &keyw, bool remove) {
 static void RemoveAccents(std::string &s) {
 	for (char &c : s) {
 		switch(c) {
-			case 'Á': c = 'A'; break;
-			case 'É': c = 'E'; break;
-			case 'Í': c = 'I'; break;
-			case 'Ó': c = 'O'; break;
-			case 'Ú': c = 'U'; break;
-			case 'Ü': c = 'U'; break;
-			case 'Ñ': c = 'N'; break;
-			case 'á': c = 'a'; break;
-			case 'é': c = 'e'; break;
-			case 'í': c = 'i'; break;
-			case 'ó': c = 'o'; break;
-			case 'ú': c = 'u'; break;
-			case 'ü': c = 'u'; break;
-			case 'ñ': c = 'n'; break;
+			case 'ï¿½': c = 'A'; break;
+			case 'ï¿½': c = 'E'; break;
+			case 'ï¿½': c = 'I'; break;
+			case 'ï¿½': c = 'O'; break;
+			case 'ï¿½': c = 'U'; break;
+			case 'ï¿½': c = 'U'; break;
+			case 'ï¿½': c = 'N'; break;
+			case 'ï¿½': c = 'a'; break;
+			case 'ï¿½': c = 'e'; break;
+			case 'ï¿½': c = 'i'; break;
+			case 'ï¿½': c = 'o'; break;
+			case 'ï¿½': c = 'u'; break;
+			case 'ï¿½': c = 'u'; break;
+			case 'ï¿½': c = 'n'; break;
 			default: ;
 		}
 	}
@@ -193,8 +193,8 @@ void fixKeywords(KeywordsList &keywords, const LangSettings & lang) {
 	keywords[KW_SUBALGORITMO].clear();
 	keywords[KW_FINSUBALGORITMO].clear();
 	if (lang[LS_PREFER_FUNCION]) {
-		keywords[KW_SUBALGORITMO] += "Función";
-		keywords[KW_FINSUBALGORITMO] += "FinFunción, Fin Función";
+		keywords[KW_SUBALGORITMO] += "FunciÃ³n, Funcion";
+		keywords[KW_FINSUBALGORITMO] += "FinFunciÃ³n, FinFuncion, Fin FunciÃ³n, Fin Funcion";
 	}
 	if (not lang[LS_PREFER_ALGORITMO]) {
 		keywords[KW_SUBALGORITMO] += "SubAlgoritmo, SubProceso";
@@ -204,8 +204,8 @@ void fixKeywords(KeywordsList &keywords, const LangSettings & lang) {
 		keywords[KW_FINSUBALGORITMO] += "FinSubProceso, Fin SubProceso, FinSubAlgoritmo, Fin SubAlgoritmo";
 	}
 	if (not lang[LS_PREFER_FUNCION]) {
-		keywords[KW_SUBALGORITMO] += "Función";
-		keywords[KW_FINSUBALGORITMO] += "FinFunción, Fin Función";
+		keywords[KW_SUBALGORITMO] += "FunciÃ³n, Funcion";
+		keywords[KW_FINSUBALGORITMO] += "FinFunciÃ³n, FinFuncion, Fin FunciÃ³n, Fin Funcion";
 	}
 	
 	// LS_ALLOW_ACCENTS
