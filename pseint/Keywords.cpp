@@ -162,20 +162,13 @@ int FindKeyword(std::string &src, const Keyword &keyw, bool remove) {
 static void RemoveAccents(std::string &s) {
 	for (char &c : s) {
 		switch(c) {
-			case '�': c = 'A'; break;
-			case '�': c = 'E'; break;
-			case '�': c = 'I'; break;
-			case '�': c = 'O'; break;
-			case '�': c = 'U'; break;
-			case '�': c = 'U'; break;
-			case '�': c = 'N'; break;
-			case '�': c = 'a'; break;
-			case '�': c = 'e'; break;
-			case '�': c = 'i'; break;
-			case '�': c = 'o'; break;
-			case '�': c = 'u'; break;
-			case '�': c = 'u'; break;
-			case '�': c = 'n'; break;
+			case '\xC1': case '\xE1': c = 'A'; break;
+			case '\xC9': case '\xE9': c = 'E'; break;
+			case '\xCD': case '\xED': c = 'I'; break;
+			case '\xD3': case '\xF3': c = 'O'; break;
+			case '\xDA': case '\xFA': c = 'U'; break;
+			case '\xDC': case '\xFC': c = 'U'; break;
+			case '\xD1': case '\xF1': c = 'N'; break;
 			default: ;
 		}
 	}
