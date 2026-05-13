@@ -259,7 +259,7 @@ void Ejecutar(RunTime &rt, int LineStart, int LineEnd) {
 				else {
 					_sub(line,string("Se esperan ")+time.GetForUser()+(factor==1?" milisengudos":" segundos"));
 					if (for_test) cout<<"***Esperar"<<time.GetAsInt()*factor<<"***"<<endl;
-					else if (!Inter.subtitles_on) Sleep(time.GetAsInt()*factor);
+					else if (!Inter.subtitles_on) waitMs(time.GetAsInt()*factor);
 				}
 			} break;
 			

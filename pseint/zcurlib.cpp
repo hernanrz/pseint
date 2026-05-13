@@ -1,6 +1,11 @@
 #include "global.h"
 #include <iostream>
 #include <cstdlib>
+#ifdef __WIN32__
+#include <windows.h>
+#else
+#include <unistd.h>
+#endif
 using namespace std;
 
 void lnx_setBackColor(int color);	
@@ -84,6 +89,16 @@ void setTitle(const char* title) {
 
 #ifdef __EMSCRIPTEN__
 	#include <emscripten.h>
+	EM_ASYNC_JS(void, js_waitMs, (int ms), {
+		if (typeof Module !== 'undefined' && typeof Module.onWait === 'function') {
+			return Promise.resolve(Module.onWait(ms));
+		}
+
+		return new Promise((resolve) => {
+			setTimeout(resolve, Math.max(0, ms));
+		});
+	});
+
 	EM_ASYNC_JS(int, js_getKey, (), {
 		if (typeof Module !== 'undefined' && typeof Module.onGetKey === 'function') {
 			return Promise.resolve(Module.onGetKey()).then((value) => (
@@ -127,6 +142,20 @@ void setTitle(const char* title) {
 		});
 	});
 #endif 
+
+void waitMs(int ms) {
+	if (ms <= 0) return;
+
+	#ifdef __EMSCRIPTEN__
+		js_waitMs(ms);
+	#else
+		#ifdef __WIN32__
+			Sleep(ms);
+		#else
+			usleep(ms * 1000);
+		#endif
+	#endif
+}
 
 int getKey(void) {
 	#ifdef __EMSCRIPTEN__

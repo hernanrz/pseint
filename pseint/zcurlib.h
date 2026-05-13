@@ -34,6 +34,7 @@ void setForeColor(int color);
 void clrscr();
 void gotoXY(int x, int y);
 int getKey(void);
+void waitMs(int ms);
 void hideCursor();
 void showCursor();
 void setTitle(const char* title);
