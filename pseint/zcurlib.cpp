@@ -20,7 +20,6 @@ void win_hideCursor();
 void win_showCursor();
 void win_setTitle(const char* title);
 
-
 void setBackColor(int color) {
 #ifdef __WIN32__
 	if (!for_pseint_terminal)
@@ -57,19 +56,6 @@ void gotoXY(int x, int y) {
 		lnx_gotoXY(x,y);	
 }
 
-int getKey(void) {
-	if (for_pseint_terminal) {
-		cout<<"\033[zk";
-		return cin.get();
-	} else {
-#ifdef __WIN32__
-		return win_getKey();
-#else
-		return lnx_getKey();
-#endif
-	}
-}
-
 void hideCursor() {
 #ifdef __WIN32__
 	if (!for_pseint_terminal)
@@ -98,6 +84,19 @@ void setTitle(const char* title) {
 
 #ifdef __EMSCRIPTEN__
 	#include <emscripten.h>
+	EM_ASYNC_JS(int, js_getKey, (), {
+		if (typeof Module !== 'undefined' && typeof Module.onGetKey === 'function') {
+			return Promise.resolve(Module.onGetKey()).then((value) => (
+				typeof value === 'number' ? value : 10
+			));
+		}
+
+		return new Promise((resolve) => {
+			window.alert('Presione una tecla para continuar');
+			resolve(10);
+		});
+	});
+
 	EM_ASYNC_JS(char*, js_getLine, (), {
 		const toUtf8Ptr = (text) => {
 			const safeText = typeof text === 'string' ? text : "";
@@ -128,6 +127,26 @@ void setTitle(const char* title) {
 		});
 	});
 #endif 
+
+int getKey(void) {
+	#ifdef __EMSCRIPTEN__
+		if (for_pseint_terminal) {
+			cout<<"\033[zk";
+			return js_getKey();
+		}
+	#endif
+
+	if (for_pseint_terminal) {
+		cout<<"\033[zk";
+		return cin.get();
+	} else {
+#ifdef __WIN32__
+		return win_getKey();
+#else
+		return lnx_getKey();
+#endif
+	}
+}
 
 string getLine() {
 	# ifndef __EMSCRIPTEN__

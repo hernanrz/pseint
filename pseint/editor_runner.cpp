@@ -11,10 +11,11 @@ extern "C" int pseint_run_editor(const char *program_path, const char *profile_p
 	}
 
 	std::vector<std::string> arg_values;
-	arg_values.reserve(5);
+	arg_values.reserve(6);
 	arg_values.push_back("pseint");
 	arg_values.push_back(program_path);
 	arg_values.push_back("--nouser");
+	arg_values.push_back("--forpseintterminal");
 
 	if (profile_path != nullptr && profile_path[0] != '\0') {
 		arg_values.emplace_back("--profile=");
